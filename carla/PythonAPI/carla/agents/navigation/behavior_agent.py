@@ -414,7 +414,7 @@ class BehaviorAgent(Agent):
         # 4: Intersection behavior
 
         # Checking if there's a junction nearby to slow down
-        elif self.incoming_waypoint.is_junction and (self.incoming_direction == RoadOption.LEFT or self.incoming_direction == RoadOption.RIGHT):
+        elif self.incoming_waypoint is not None and self.incoming_waypoint.is_junction and (self.incoming_direction == RoadOption.LEFT or self.incoming_direction == RoadOption.RIGHT):
             control = self._local_planner.run_step(
                 target_speed=min(self.behavior.max_speed, self.speed_limit - 5), debug=debug)
 

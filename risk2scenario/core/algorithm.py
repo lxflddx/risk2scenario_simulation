@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import time
+
 from risk_chromosome import Chromosome, ChromosomeFactory
 import random
 import numpy as np
@@ -26,10 +28,11 @@ class Fuzzer:
         self.chrom_factory = None
         self.logical_testcase = None
         self.last_elitism = None
-        self.sim = Simulation()
+        # self.sim = Simulation()
         self.pop = []
         self.collision = 0
         self.collision_scenario = []
+        self.env_config = None
 
     # def initialize(self, logical_testcase):
     #     # 测试版
@@ -42,18 +45,33 @@ class Fuzzer:
     #         chrom = self.chrom_factory.generate_random_chromosome()
     #         print("=== Generate Chromosome === \n %s", self.chrom2string(chrom))
     #         self.pop.append(chrom)
+    #
+    # def initialize(self):
+    #     self.pop = []
+    #     self.chrom_factory = ChromosomeFactory(self.logical_testcase)
+    #     for i in range(self.pop_size):
+    #         chrom = self.chrom_factory.generate_random_chromosome()
+    #         self.pop.append(chrom)
+    #     self.eval_pop()
+    #     self.pop = self.get_survivals(n_survival=self.pop_size)
+    #     for chrom in self.pop:
+    #         chrom.fitness.append(-1.0)
+    #     self.last_elitism = self.pop[0].clone()
 
-    def initialize(self):
+    def initialize (self):
         self.pop = []
         self.chrom_factory = ChromosomeFactory(self.logical_testcase)
+
+        # 开始计时
+        start = time.perf_counter()
+
         for i in range(self.pop_size):
             chrom = self.chrom_factory.generate_random_chromosome()
             self.pop.append(chrom)
-        self.eval_pop()
-        self.pop = self.get_survivals(n_survival=self.pop_size)
-        for chrom in self.pop:
-            chrom.fitness.append(-1.0)
-        self.last_elitism = self.pop[0].clone()
+
+        end = time.perf_counter()
+        elapsed = end - start
+        print(f"生成 {self.pop_size} 个随机染色体耗时: {elapsed:.6f} 秒")
 
     def eval(self, testcase: Chromosome):
         """
@@ -62,7 +80,7 @@ class Fuzzer:
         :return: (适应度, 是否碰撞)
         """
         logger.info("=== Evaluate Testcase === \n %s", self.chrom2string(testcase))
-        fitness, is_collision = self.sim.run_test(testcase.testcase)
+        fitness, is_collision = self.sim.run_test(testcase.testcase,env_config=self.env_config)
         logger.info("=== Evaluation Finished === \n Fitness: %s, Collision: %s", fitness, is_collision)
         if is_collision is True:
             logger.info("=== Find a collision ===")
@@ -77,7 +95,10 @@ class Fuzzer:
             # time.sleep(1)
             self.sim = Simulation()  # 重新初始化Simulation
 
-            chrom.fitness, is_collision = self.sim.run_test(chrom.testcase)
+            chrom.fitness, is_collision = self.sim.run_test(
+                chrom.testcase,
+                env_config=self.env_config
+            )
             if is_collision is True:
                 logger.info("=== Find a collision ===")
                 self.collision += 1
@@ -217,9 +238,10 @@ class Fuzzer:
         # logger.info("The best individual: %s \r\n its fitness score is %s",
         #                  self.chrom2string(self.population[0]), str(self.population[0].fitness))
 
-    def loop(self, logical_testcase):
+    def loop(self, logical_testcase,env_config=None):
         self.logical_testcase = logical_testcase
         self.pop_size = logical_testcase.size()
+        self.env_config = env_config or {}
         logger.info("Pop size: %d", self.pop_size)
         # logger.info("Pop size: %d", 3)
         self.initialize()
@@ -250,4 +272,29 @@ class Fuzzer:
     def chrom2string(chrom):
         return astunparse.unparse(ast.fix_missing_locations(chrom.testcase.update_ast_node()))
 
+    # def evolution(self, num_mutations):
+    # """
+    # 我自己写的只有变异的算法
+    # """
+    #     results = []
+    #     for i in range(num_mutations):
+    #         logger.info("=== Generate Offspring === ", i + 1)
+    #         mutated_testcase = self.chrom.clone()
+    #         mutated_testcase.mutate()
+    #         logger.info("=== Mutated Testcase === \n %s", self.chrom2string(mutated_testcase))
+    #         # fitness, is_collision = self.eval(mutated_testcase)
+    #         # results.append((mutated_testcase, fitness, is_collision))
+    #     return results
+
+    # def run(self, num_mutations):
+    #     """
+    #     执行变异和评估流程。
+    #     :param num_mutations: 变异次数。
+    #     """
+    #     results = self.evolution(num_mutations)
+    #     logger.info("=== Summary of Mutations ===")
+    #     for i, (testcase, fitness, is_collision) in enumerate(results):
+    #         logger.info("=== Mutation %d ===", i + 1)
+    #         logger.info("Testcase: %s", self.chrom2string(testcase))
+    #         # logger.info("Fitness: %s, Collision: %s", fitness, is_collision)
 
