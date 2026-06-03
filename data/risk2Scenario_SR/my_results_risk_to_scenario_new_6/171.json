@@ -1,0 +1,14 @@
+{
+    "accident_report": "V1 (Car) is initialized in Lane 2, 20 meters behind V2 (Truck), with an intent to overtake V2. V2 is traveling at 60 mph in Lane 2, while V3 (Sedan) is parallel in Lane 3, also at 60 mph. V1, traveling at 70 mph, decides to overtake V2 by moving into Lane 3. However, due to an unidentified critical pre-crash event, V1 misjudges the distance to V3 and encroaches on V3's lane, resulting in a sideswipe collision when V1 makes a broader lane change than intended. The outcome is a sideswipe collision between V1 and V3 in Lane 3, causing damage to both vehicles but no rollover.",
+    "functional_scenario": {
+        "func_scenario": "Initial actions: \n(V1): V1 drives on Lane 2, 20 meters behind V2; (V2): V2 drives on Lane 2 at 60 mph; (V3): V3 drives on Lane 3 at 60 mph.\nInteractive pattern sequence: \n (V1, V2): V1 accelerates and attempts to overtake V2 which maintains its speed in the adjacent lane; (V1, V3): V1 swerves left to change lanes and V3 maintains its position in the adjacent lane; (V1, V3): V1 encroaches on V3\u2019s lane and V3 maintains its speed.",
+        "func_scenario_dict": {
+            "Environment": "Dry road surface, clear weather conditions.",
+            "Road Structure": "Straight 3-lane road.",
+            "Initial Actions": "(V1): V1 drives on Lane 2, 20 meters behind V2; (V2): V2 drives on Lane 2 at 60 mph; (V3): V3 drives on Lane 3 at 60 mph.",
+            "Interactive Pattern Sequence": " (V1, V2): V1 accelerates and attempts to overtake V2 which maintains its speed in the adjacent lane; (V1, V3): V1 swerves left to change lanes and V3 maintains its position in the adjacent lane; (V1, V3): V1 encroaches on V3\u2019s lane and V3 maintains its speed."
+        },
+        "candidate_ego": " V2"
+    },
+    "logical_scenario": "\n\ndef testcase(self):\n    vehicle1 = NPC(lane_id=[2, 2], offset=[20.0, 20.0], initial_speed=[50.0, 50.0])\n    ego = NPC(lane_id=[2, 2], offset=[0.0, 0.0], initial_speed=[60.0, 60.0])\n    vehicle3 = NPC(lane_id=[3, 3], offset=[0.0, 0.0], initial_speed=[60.0, 60.0])\n    vehicle1.accelerate(target_speed=[80.0, 80.0], trigger_sequence=[1, 1])\n    vehicle1.changeLane(target_lane=[3, 3], target_speed=[60.0, 60.0], trigger_sequence=[2, 2])\n"
+}

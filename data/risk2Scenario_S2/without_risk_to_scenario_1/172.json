@@ -1,0 +1,14 @@
+{
+    "accident_report": "Vehicle 1 (V1) is traveling in Lane 2 at a speed of 70 km/h. Vehicle 2 (V2) is ahead of V1 in the same lane, traveling at a slower speed of 50 km/h. Vehicle 3 (V3) is in Lane 3, 10 meters ahead of V1 and traveling at 80 km/h. V1 approaches V2 and decides to overtake it due to V2's slower speed. After checking the left mirror and seeing that Lane 3 seems clear except for V3, V1 signals left and moves into Lane 3. V1 accelerates to 80 km/h to pass V2 but doesn't notice that V3 has started to decelerate due to an obstacle ahead in Lane 3. Focusing on overtaking V2, V1 drifts too far into Lane 3 and gets too close to V3, which has now slowed down to 60 km/h. V1 tries to brake but still makes a sideswipe contact with V3. The result is a sideswipe collision between V1 and V3, causing minor to moderate damage to both vehicles. They need to pull over to the shoulder, temporarily disrupting traffic in Lane 3.",
+    "functional_scenario": {
+        "func_scenario": "Initial actions: \n(V1): V1 drives on Lane 2 at 70 km/h; (V2): V2 drives on Lane 2 at 50 km/h, ahead of V1; (V3): V3 drives on Lane 3, 10 meters ahead of V1, at 80 km/h.\n\nInteractive pattern sequence: \n (V1, V2): V1 accelerates to approach and overtake V2 which maintains its speed ahead; (V1, V3): V1 swerve left to enter Lane 3 while V3 decelerates due to an obstacle ahead; (V1, V3): V1 accelerates and drifts closer to V3 which continues to decelerate in Lane 3.\n",
+        "func_scenario_dict": {
+            "Environment": "Dry road conditions, clear weather. Visibility is good.\n",
+            "Road Structure": "Straight 3-lane road. Lane IDs increase from right to left.\n",
+            "Initial Actions": "(V1): V1 drives on Lane 2 at 70 km/h; (V2): V2 drives on Lane 2 at 50 km/h, ahead of V1; (V3): V3 drives on Lane 3, 10 meters ahead of V1, at 80 km/h.\n",
+            "Interactive Pattern Sequence": " (V1, V2): V1 accelerates to approach and overtake V2 which maintains its speed ahead; (V1, V3): V1 swerve left to enter Lane 3 while V3 decelerates due to an obstacle ahead; (V1, V3): V1 accelerates and drifts closer to V3 which continues to decelerate in Lane 3.\n"
+        },
+        "candidate_ego": " V2"
+    },
+    "logical_scenario": "\n\ndef testcase(self):\n    vehicle1 = NPC(lane_id=[2, 2], offset=[0.0, 0.0], initial_speed=[70.0, 70.0])\n    ego = NPC(lane_id=[2, 2], offset=[20.0, 50.0], initial_speed=[50.0, 50.0])\n    vehicle3 = NPC(lane_id=[3, 3], offset=[10.0, 15.0], initial_speed=[80.0, 80.0])\n    vehicle1.accelerate(target_speed=[90.0, 100.0], trigger_sequence=[1, 1])\n    vehicle1.changeLane(target_lane=[3, 3], target_speed=[70.0, 80.0], trigger_sequence=[2, 2])\n    vehicle3.decelerate(target_speed=[50.0, 60.0], trigger_sequence=[2, 2])\n    vehicle1.accelerate(target_speed=[80.0, 90.0], trigger_sequence=[3, 3])\n    vehicle3.decelerate(target_speed=[30.0, 40.0], trigger_sequence=[3, 3])\n"
+}

@@ -1,0 +1,14 @@
+{
+    "accident_report": "V1 (Car) is in Lane 3, traveling parallel to V2 in Lane 2 (V1 could be slightly behind V2). V2 (Truck) is in Lane 2, traveling slightly ahead of V1. V3 (\"Phantom Vehicle\") is traveling in Lane 1 behind V2 and makes an unsafe lane change from Lane 1 to Lane 2. On a straight road, V1 is in Lane 3 while V2 is in Lane 2 traveling slightly ahead of V1. V3 makes an unsafe lane change from Lane 1 to Lane 2, failing to yield to V2 who is in Lane 2. V2 makes a sudden lane change into Lane 3 to avoid a collision with the aggressive V3 who merges into Lane 2. V2 encroaches into V1's lane (Lane 3) where V1 is cruising. As a result, V1 and V2 sideswipe each other in Lane 3. A sideswipe collision occurs between V1 and V2 in Lane 3 because V2 swerved into V1's lane to avoid an unsafe maneuver by the \"phantom vehicle\" V3.",
+    "functional_scenario": {
+        "func_scenario": "Initial actions: \n(V1): V1 drives on Lane 3, traveling parallel to V2; (V2): V2 drives on Lane 2, traveling slightly ahead of V1; (V3): V3 drives on Lane 1 behind V2.\n\nInteractive pattern sequence: \n (V3, V2): V3 attempts to swerve right from Lane 1 to Lane 2 while V2 is traveling ahead in Lane 2; (V2, V1): V2 swerves right from Lane 2 into Lane 3 while V1 is cruising in Lane 3; (V2, V1): V2 encroaches into Lane 3 and sideswipes V1 which is traveling in Lane 3.\n",
+        "func_scenario_dict": {
+            "Environment": "Dry road conditions, clear weather.",
+            "Road Structure": "Straight 4-lane road.\n",
+            "Initial Actions": "(V1): V1 drives on Lane 3, traveling parallel to V2; (V2): V2 drives on Lane 2, traveling slightly ahead of V1; (V3): V3 drives on Lane 1 behind V2.\n",
+            "Interactive Pattern Sequence": " (V3, V2): V3 attempts to swerve right from Lane 1 to Lane 2 while V2 is traveling ahead in Lane 2; (V2, V1): V2 swerves right from Lane 2 into Lane 3 while V1 is cruising in Lane 3; (V2, V1): V2 encroaches into Lane 3 and sideswipes V1 which is traveling in Lane 3.\n"
+        },
+        "candidate_ego": " V1"
+    },
+    "logical_scenario": "\n\ndef testcase(self):\n    ego = NPC(lane_id=[2, 2], offset=[10.0, 20.0], initial_speed=[20.0, 30.0])\n    vehicle2 = NPC(lane_id=[1, 1], offset=[5.0, 15.0], initial_speed=[25.0, 35.0])\n    vehicle3 = NPC(lane_id=[0, 0], offset=[1, 1], initial_speed=[20.0, 30.0])\n    vehicle3.changeLane(target_lane=[1, 1], target_speed=[25.0, 35.0], trigger_sequence=[1, 1])\n    vehicle2.changeLane(target_lane=[2, 2], target_speed=[20.0, 30.0], trigger_sequence=[2, 2])\n    vehicle2.changeLane(target_lane=[2, 2], target_speed=[20.0, 30.0], trigger_sequence=[3, 3])\n"
+}

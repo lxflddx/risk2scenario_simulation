@@ -1,0 +1,14 @@
+{
+    "accident_report": "V1 is in Lane 3 (third lane from the right), intending to make a left turn onto an intersecting road. V2 is in Lane 3, initially 50 meters behind V1, traveling in the same direction. V3 is in Lane 4 (fourth lane from the right), parallel to V2 and also 50 meters behind V1. V1 signals its intention to make a left turn and comes to a stop in Lane 3 because it needs to yield to oncoming traffic. V2, which is initially 50 meters behind V1, does not notice that V1 has stopped because the driver is distracted. When V2 realizes that V1 has stopped, it is too late and V2 collides with the rear of V1. V3 swerves to avoid the collision but loses control and makes a secondary collision with V1. The outcome is that V1 is rear-ended by V2 due to V2's distracted driving. V3 makes a secondary collision with V1 after swerving to avoid the collision, involving all three vehicles in the traffic accident.",
+    "functional_scenario": {
+        "func_scenario": "Initial actions: \n(V1): V1 drives on Lane 3 intending to turn left; (V2): V2 drives on Lane 3, 50 meters behind V1; (V3): V3 drives on Lane 4, 50 meters behind V1 and parallel to V2.\n\nInteractive pattern sequence: \n (V1, V2): V1 begins to brake in Lane 3 as it approaches the intersection while V2 continues to travel at a constant speed 50 meters behind V1; (V2, V1): V2 decelerates rapidly in Lane 3 as it realizes V1 is stopped ahead.\n",
+        "func_scenario_dict": {
+            "Environment": "Dry road surface, clear weather conditions.",
+            "Road Structure": "Straight 4-lane road with an intersection.\n",
+            "Initial Actions": "(V1): V1 drives on Lane 3 intending to turn left; (V2): V2 drives on Lane 3, 50 meters behind V1; (V3): V3 drives on Lane 4, 50 meters behind V1 and parallel to V2.\n",
+            "Interactive Pattern Sequence": " (V1, V2): V1 begins to brake in Lane 3 as it approaches the intersection while V2 continues to travel at a constant speed 50 meters behind V1; (V2, V1): V2 decelerates rapidly in Lane 3 as it realizes V1 is stopped ahead.\n"
+        },
+        "candidate_ego": " V1"
+    },
+    "logical_scenario": "\n\ndef testcase(self):\n    ego = NPC(lane_id=[3, 3], offset=[0.0, 50.0], initial_speed=[50.0, 70.0])\n    vehicle2 = NPC(lane_id=[3, 3], offset=[50.0, 100.0], initial_speed=[50.0, 70.0])\n    vehicle3 = NPC(lane_id=[4, 4], offset=[0.0, 50.0], initial_speed=[50.0, 70.0])\n    vehicle2.decelerate(target_speed=[0.0, 5.0], trigger_sequence=[2, 2])\n"
+}
