@@ -1,0 +1,14 @@
+{
+    "accident_report": "Vehicle 1 (V1) is traveling eastbound in lane 1, positioned 20 meters behind a large truck (T1) that obstructs its view. Due to T1's slow speed and heavy traffic congestion, V1 decides to overtake by moving into lane 2, which is initially free. However, upon encountering more traffic in lane 2, V1 attempts to change lanes into lane 3, where it misjudges the gap and collides with Vehicle 2 (V2). V2, which was waiting in the center turn lane, had started a left turn into the eastbound lanes, finding a gap in westbound traffic. The collision between V1 and V2 in lane 3 causes traffic to halt and leads to secondary congestion issues.",
+    "functional_scenario": {
+        "func_scenario": "Initial actions: \n(V1): V1 drives eastbound on Lane 1, 20 meters behind T1; (T1): T1 drives eastbound on Lane 1 at a slow speed; (V2): V2 waits in the center turn lane, preparing for a left turn; (V3): V3 drives westbound on Lane 4; (V4): V4 drives westbound on Lane 3.\n\nInteractive pattern sequence: \n (V1, T1): V1 decelerates as T1 maintains its slow speed ahead; (V1, V2): V1 swerve right to move from Lane 1 to Lane 2, while V2 remains in the center turn lane anticipating a gap; (V1, V2): V1 swerve right to move from Lane 2 to Lane 3, while V2 accelerate from center turn lane to enter Lane 3.\n",
+        "func_scenario_dict": {
+            "Environment": "Moderate traffic congestion, dry road surface, clear weather conditions.\n",
+            "Road Structure": "Straight 4-lane road with a center turn lane. Lane IDs increase from right to left, therefore Lane 1 is the rightmost lane and Lane 4 is the leftmost lane.\n",
+            "Initial Actions": "(V1): V1 drives eastbound on Lane 1, 20 meters behind T1; (T1): T1 drives eastbound on Lane 1 at a slow speed; (V2): V2 waits in the center turn lane, preparing for a left turn; (V3): V3 drives westbound on Lane 4; (V4): V4 drives westbound on Lane 3.\n",
+            "Interactive Pattern Sequence": " (V1, T1): V1 decelerates as T1 maintains its slow speed ahead; (V1, V2): V1 swerve right to move from Lane 1 to Lane 2, while V2 remains in the center turn lane anticipating a gap; (V1, V2): V1 swerve right to move from Lane 2 to Lane 3, while V2 accelerate from center turn lane to enter Lane 3.\n"
+        },
+        "candidate_ego": " V3"
+    },
+    "logical_scenario": "\n\ndef testcase(self):\n    vehicle1 = NPC(lane_id=[1, 1], offset=[20.0, 20.0], initial_speed=[30.0, 30.0])\n    vehicle2 = NPC(lane_id=[5, 5], offset=[0.0, 0.0], initial_speed=[0.0, 0.0])\n    vehicle1.decelerate(target_speed=[10.0, 10.0], trigger_sequence=1)\n    vehicle1.changeLane(target_lane=[2, 2], target_speed=[20.0, 20.0], trigger_sequence=2)\n    vehicle1.changeLane(target_lane=[3, 3], target_speed=[30.0, 30.0], trigger_sequence=3)\n    vehicle2.accelerate(target_speed=[30.0, 30.0], trigger_sequence=4)\n"
+}

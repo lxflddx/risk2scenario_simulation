@@ -1,0 +1,14 @@
+{
+    "accident_report": "Vehicle A (overtaking car) is in Lane 2, 10 meters behind Vehicle B which is also in Lane 2. Vehicle A is traveling at 80 km/h while Vehicle B is traveling at 60 km/h. Vehicle C (third vehicle) is in Lane 3, 20 meters ahead of Vehicle A and traveling at 80 km/h. Vehicle A approaches Vehicle B from behind in Lane 2 and decides to overtake. Vehicle A signals and moves into Lane 3 where Vehicle C is traveling. As Vehicle A accelerates to pass Vehicle B, it drifts too far to the left within Lane 3 and makes contact with Vehicle C, which was traveling parallel to Vehicle A in the same lane. Vehicle A attempts to correct its position but fails to avoid a sideswipe collision with Vehicle C. The result is a sideswipe collision between Vehicle A and Vehicle C. Both vehicles suffer minor damage and need to pull over to the shoulder. Traffic in Lane 3 is temporarily disrupted.",
+    "functional_scenario": {
+        "func_scenario": "Initial actions: \n(V1): V1 drives on Lane 3 at 80 km/h; (V2): V2 drives on Lane 2 at 60 km/h; (V3): V3 drives on Lane 2, 10 meters ahead of V2 at 60 km/h.\n\nInteractive pattern sequence: \n (V3, V2): V3 decelerates as V2 accelerates and approaches from behind in the same lane; (V3, V1): V3 maintains its position as V1 accelerates and moves from Lane 2 to Lane 3, positioning itself alongside V3; (V1, V3): V1 swerves left as V3 maintains its position, resulting in a sideswipe collision.\n",
+        "func_scenario_dict": {
+            "Environment": "Dry road conditions, clear weather.",
+            "Road Structure": "Straight 3-lane road.\n",
+            "Initial Actions": "(V1): V1 drives on Lane 3 at 80 km/h; (V2): V2 drives on Lane 2 at 60 km/h; (V3): V3 drives on Lane 2, 10 meters ahead of V2 at 60 km/h.\n",
+            "Interactive Pattern Sequence": " (V3, V2): V3 decelerates as V2 accelerates and approaches from behind in the same lane; (V3, V1): V3 maintains its position as V1 accelerates and moves from Lane 2 to Lane 3, positioning itself alongside V3; (V1, V3): V1 swerves left as V3 maintains its position, resulting in a sideswipe collision.\n"
+        },
+        "candidate_ego": " V1"
+    },
+    "logical_scenario": "\n\ndef testcase(self):\n    ego = NPC(lane_id=[2, 2], offset=[10.0, 10.0], initial_speed=[60.0, 60.0])\n    vehicle2 = NPC(lane_id=[2, 2], offset=[0.0, 0.0], initial_speed=[60.0, 60.0])\n    vehicle3 = NPC(lane_id=[3, 3], offset=[10.0, 10.0], initial_speed=[80.0, 80.0])\n    vehicle3.decelerate(target_speed=[40.0, 40.0], trigger_sequence=1)\n    vehicle2.accelerate(target_speed=[70.0, 70.0], trigger_sequence=1)\n    vehicle3.accelerate(target_speed=[70.0, 70.0], trigger_sequence=2)\n    vehicle3.accelerate(target_speed=[70.0, 70.0], trigger_sequence=3)\n"
+}

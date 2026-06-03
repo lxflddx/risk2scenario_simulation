@@ -1,0 +1,14 @@
+{
+    "accident_report": "Vehicle #1 (V1) is positioned in Lane 2 and stops when attempting a left turn from a T-intersection on a multi-lane road. Vehicle #2 (V2) is 30 meters behind V1 in Lane 2, traveling at 80 km/h while the driver is showing a passenger a scenic landmark on the right side of the road. Vehicle #3 (V3) is traveling in Lane 3, 20 meters ahead of V1 when V1 stops. V1 travels until a T-intersection requires a left turn from Lane 2 where it needs to wait for a safe opening in Lane 3 traffic. V1 stops entirely within Lane 2. V2 follows V1 at a distance of 30 meters but is distracted because the driver points out a scenic landmark (e.g., famous building) on the right to a passenger. V2 fails to recognize that V1 has stopped until the driver looks back at the road only when V2 is already very close to V1. The speed differential here is substantial as V1 is completely stopped while V2 travels at 80 km/h, which makes stopping in time impossible.",
+    "functional_scenario": {
+        "func_scenario": "Initial actions: \n(V1): V1 drives on Lane 2 approaching a T-intersection intending to turn left; (V2): V2 drives on Lane 2, following V1 with a 30-meter distance; (V3): V3 drives on Lane 3, 20 meters ahead of V1.\nInteractive pattern sequence: \n (V1, V2): V1 decelerates as it approaches the T-intersection while V2 maintains its speed 30 meters behind; (V1, V3): V1 decelerates and stops within Lane 2 while V3 continues traveling on Lane 3, 20 meters ahead; (V2, V1): V2 continues at a constant speed approaching the stopped V1 in Lane 2.",
+        "func_scenario_dict": {
+            "Environment": "Clear weather, dry road surface.",
+            "Road Structure": "Multi-lane road with a T-intersection.",
+            "Initial Actions": "(V1): V1 drives on Lane 2 approaching a T-intersection intending to turn left; (V2): V2 drives on Lane 2, following V1 with a 30-meter distance; (V3): V3 drives on Lane 3, 20 meters ahead of V1.",
+            "Interactive Pattern Sequence": " (V1, V2): V1 decelerates as it approaches the T-intersection while V2 maintains its speed 30 meters behind; (V1, V3): V1 decelerates and stops within Lane 2 while V3 continues traveling on Lane 3, 20 meters ahead; (V2, V1): V2 continues at a constant speed approaching the stopped V1 in Lane 2."
+        },
+        "candidate_ego": " V2"
+    },
+    "logical_scenario": "\n\ndef testcase(self):\n    vehicle1 = NPC(lane_id=[2, 2], offset=[0.0, 0.0], initial_speed=[50.0, 50.0])\n    ego = NPC(lane_id=[2, 2], offset=[30.0, 30.0], initial_speed=[50.0, 50.0])\n    vehicle3 = NPC(lane_id=[3, 3], offset=[20.0, 20.0], initial_speed=[50.0, 50.0])\n    vehicle1.decelerate(target_speed=[0.0, 0.0], trigger_sequence=[1, 1])\n"
+}
