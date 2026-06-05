@@ -2,14 +2,14 @@ from __future__ import annotations
 
 import time
 
-from risk_chromosome import Chromosome, ChromosomeFactory
+from .risk_chromosome import Chromosome, ChromosomeFactory
 import random
 import numpy as np
 import ast
 import math
 import astunparse
 import logging
-from simulate import Simulation
+from .simulate import Simulation
 from risk2scenario.utils import fnds
 
 logger = logging.getLogger(__name__)

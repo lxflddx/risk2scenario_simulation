@@ -1,8 +1,8 @@
 from __future__ import annotations
 import json
 import logging
-from testcase import TestCase
-from statement import Statement, ConstructorStatement, MethodStatement
+from risk2scenario.core.testcase import TestCase
+from risk2scenario.core.statement import Statement, ConstructorStatement, MethodStatement
 
 import random
 import astunparse
@@ -86,11 +86,10 @@ class ChromosomeFactory:
     def __init__(self, logical_testcase: TestCase, scenario_type="straight_road"):
         self.logical_testcase = logical_testcase
         self.scenario_type = scenario_type
-        project_path = os.path.dirname(os.path.abspath(__file__))
-
-        with open(project_path + '/configs/' + '/basic.json') as f:
+        project_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        config_path = os.path.join(project_path, 'configs', 'basic.json')
+        with open(config_path) as f:
             self.basic_config = json.load(f)
-        print("basic_config: ", self.basic_config)
 
         self.update_param_range()
 
@@ -164,7 +163,7 @@ class ChromosomeFactory:
             if isinstance(statement, MethodStatement):
                 if statement.method_name == "decelerate":
                     statement.arg_bounds["target_speed"] = self.basic_config["dc_target_speed"]
-                    statement.arg_bounds["time_interval"] = self.basic_config["time_interval"]
+                    statement.arg_bounds["time_interval"] = self.basic_config["time_interval"]      # 有时间间隔
                     # statement.arg_bounds["time_interval"] = [5,5]
 
                 if statement.method_name == "accelerate":

@@ -12,8 +12,18 @@
 | 被测系统   | CARLA Basic Agent / CARLA Behavior Agent |
 | Python     | 3.8+                                    |
 ## 使用步骤
+### 1. 环境安装
 
-### 1. 安装 CARLA 0.9.15
+```bash
+# 创建虚拟环境（可选）
+python -m venv .venv
+.venv\Scripts\activate
+
+# 安装 Python 依赖
+pip install -r requirements.txt
+```
+
+### 2. 安装 CARLA 0.9.15
 
 - 从 [CARLA 官方 GitHub](https://github.com/carla-simulator/carla/releases/tag/0.9.15) 下载 Windows 版本。
 - 解压到本地（例如 `C:\CARLA_0.9.15`）。
@@ -21,13 +31,13 @@
   ```powershell
   cd C:\CARLA_0.9.15
   .\CarlaUE4.exe -quality-level=Low -fps=30
-### 2. 准备输入数据
+### 3. 准备输入数据
 将上一阶段生成的逻辑场景测试用例（Excel 格式）放入 `data/` 目录。
-### 3. 选择被测 Agent
+### 4. 选择被测 Agent
 打开 `risk2scenario/core/simulate.py`，在代码中设置所需的 Agent：
 - `BasicAgent`（默认）
 - `BehaviorAgent`
-### 4. 运行主程序
+### 5. 运行主程序
 在项目根目录下执行：
 ```powershell
 python main.py
@@ -39,48 +49,42 @@ python main.py
 - 日志保存到 `logs/`。
 
 **消融实验**：若需去除时间敏感交互建模进行消融实验，在 `configs/config.yaml` 中将 `time_interval` 参数改为 `[5, 5]`，固定间隔，不再动态变化。
-
-### 5. 结果验证
+### 6. 结果验证
 
 若程序运行成功，仿真日志记录在 `logs/` 文件夹中，文件名如 `2026-06-02-13-23.log`。
 
 **注意**：碰撞场景需要从日志中手工提取并验证。方法如下：
 
 #### 1. 在日志中搜索关键场景
-
-1. 打开 `logs/` 下的任意 `.log` 文件。
-2. 搜索关键词（如 `find a collision` 等）。
-3. 找到对应的具体场景测试用例。
-4. 复制相关参数行，保存到文本文件备用。
+- 打开 `logs/` 下的任意 `.log` 文件。
+- 搜索关键词（如 `find a collision` 等）。
+- 找到对应的具体场景测试用例。
+- 复制相关参数行，保存到文本文件备用。
 
 #### 2. 回放关键场景
 
 - 使用 `risk2scenario/utils/replay.py` 脚本。
 - 将提取出的场景测试用例作为输入，运行仿真。
 - 观察是否发生碰撞，并判断碰撞类型。
-
 # 项目结构
 ```
 risk_fuzz/
-├── carla/                            # CARLA Python API 客户端及辅助脚本
-├── configs/                          # 配置文件目录
-│   ├── basic.json                    # 基础场景配置（道路、车辆参数等）
+├── carla/                            # CARLA Python API
+├── configs/                          # 配置文件
+│   ├── basic.json                    # 基础场景配置
 │   └── config.yaml                   # 遗传算法参数
-├── data/                             # 数据目录
-│   ├── legend/                       
-│   ├── risk2Scenario_S2/             
-│   └── risk2Scenario_SR/             
+├── data/                             # 种子场景测试用例（.xlsx）
 ├── logs/                             # 仿真日志存放目录
-├── risk2scenario/                    
+├── risk2scenario/                    # 场景生成
 │   ├── core/                         # 遗传算法与仿真核心模块
-│   │   ├── algorithm.py              # 遗传算法主循环（选择、交叉、变异）
-│   │   ├── carla_world.py            # CARLA 世界封装（生成车辆、车辆动作定义）
+│   │   ├── algorithm.py              # 遗传算法
+│   │   ├── carla_world.py            # CARLA世界封装
 │   │   ├── DummyWorld.py             
 │   │   ├── risk_chromosome.py        
-│   │   ├── simulate.py               # 仿真代码
+│   │   ├── simulate.py               # 仿真执行
 │   │   ├── statement.py              
 │   │   └── testcase.py               
-│   ├── random/                       # 随机基线
+│   ├── random/                       # 随机基线方法
 │   │   └── random_test.py            
 │   └── utils/                        # 工具函数
 │       ├── fnds.py                   # 适应度计算与 Pareto 前沿排序
@@ -89,4 +93,4 @@ risk_fuzz/
 │       └── simulate_utils.py         
 ├── main.py                           # 程序入口
 ├── README.md                         
-└── requirements.txt                  # Python 依赖包列表
+└── requirements.txt                  

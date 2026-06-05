@@ -5,7 +5,7 @@ import re
 from abc import ABCMeta
 from itertools import islice
 from typing import TYPE_CHECKING
-from statement import Statement, ConstructorStatement, MethodStatement
+from .statement import Statement, ConstructorStatement, MethodStatement
 
 
 class TestCase(metaclass=ABCMeta):

@@ -72,8 +72,8 @@ def load_env_configs (json_path):
 if __name__ == "__main__":
 
 
-    excel_path = r"D:\pythonProject\LLM_Scenario\data\risk_combine\risk_combine_1.xlsx"
-    env_json_path = r"D:\pythonProject\LLM_Scenario\env_configs_14.json"
+    excel_path = r"D:\pythonProject\LLM_Scenario\data\result_time_test\CT_new_2.xlsx"
+    env_json_path = r"D:\pythonProject\risk_fuzz\env_configs_14.json"
 
     test_list = read_testcases_from_excel(excel_path)
     env_configs = load_env_configs(env_json_path)
@@ -97,6 +97,7 @@ if __name__ == "__main__":
     fuzzer = Fuzzer(config)
 
     for item in test_list:
+
         testcase_id = item ["testcase_id"]
         testcase_str = item ["testcase_str"]
 
@@ -106,6 +107,7 @@ if __name__ == "__main__":
 
         # 取对应环境配置
         env_config = env_configs.get(testcase_id)
+
         if env_config is None:
             logger.warning(f"Missing env_config for {testcase_id}, skip.")
             print(f"Missing env_config for {testcase_id}, skip.")
@@ -113,24 +115,55 @@ if __name__ == "__main__":
 
         print(f"\n=== Running {testcase_id} ===")
         print(f"env_config: {env_config}")
-        logger.info(f"Running {testcase_id}, env_config={env_config}")
 
-        logical_testcase = my_parser.parse_testcase_string(testcase_str)
-        num, cs_list = fuzzer.loop(logical_testcase, env_config=env_config)
+        logger.info(
+            f"Running {testcase_id}, env_config={env_config}"
+        )
 
-        data = {}
-        data ["testcase_id"] = testcase_id
-        data ["env_config"] = env_config
-        data ["collision_num"] = num
-        data ["critical_scenarios"] = cs_list
-
+        # =========================
+        # 自动识别输入格式
+        # =========================
+        try:
+            testcase_content = testcase_str.strip()
+            # JSON逻辑场景
+            if testcase_content.startswith("{"):
+                print(f"{testcase_id}: JSON logical scenario detected")
+                logical_testcase = my_parser.parse_testcase_json(
+                    json.loads(testcase_content)
+                )
+            # def testcase()格式
+            else:
+                print(f"{testcase_id}: testcase string detected")
+                logical_testcase = my_parser.parse_testcase_string(
+                    testcase_content
+                )
+        except Exception as e:
+            logger.error(
+                f"Parse failed for {testcase_id}: {e}"
+            )
+            print(
+                f"Parse failed for {testcase_id}: {e}"
+            )
+            continue
+        # =========================
+        # Fuzz测试
+        # =========================
+        num, cs_list = fuzzer.loop(
+            logical_testcase,
+            env_config=env_config
+        )
+        data = {
+            "testcase_id": testcase_id,
+            "env_config": env_config,
+            "collision_num": num,
+            "critical_scenarios": cs_list
+        }
         print(f"{testcase_id} collision_num: {num}")
-        logger.info(f"{testcase_id} collision_num: {num}")
-        logger.info(f"{testcase_id} critical_scenarios: {cs_list}")
-    ctypes.windll.user32.MessageBoxW(
-        0,
-        "本轮测试已全部运行完毕。",
-        "运行完成",
-        0x400
-    )
+
+        logger.info(
+            f"{testcase_id} collision_num: {num}"
+        )
+        logger.info(
+            f"{testcase_id} critical_scenarios: {cs_list}"
+        )
 

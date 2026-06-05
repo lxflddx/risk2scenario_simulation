@@ -1,0 +1,86 @@
+{
+  "TC_01": {
+    "RoadCurvature": "Straight",
+    "RoadGrade": "Flat",
+    "RoadFrictionCoefficient": "Slippery",
+    "VisibilityConditions": "AdverseWeather"
+  },
+  "TC_02": {
+    "RoadCurvature": "Straight",
+    "RoadGrade": "Uphill",
+    "RoadFrictionCoefficient": "Dry",
+    "VisibilityConditions": "Good"
+  },
+  "TC_03": {
+    "RoadCurvature": "Straight",
+    "RoadGrade": "Downhill",
+    "RoadFrictionCoefficient": "Slippery",
+    "VisibilityConditions": "Good"
+  },
+  "TC_04": {
+    "RoadCurvature": "Straight",
+    "RoadGrade": "Downhill",
+    "RoadFrictionCoefficient": "Dry",
+    "VisibilityConditions": "Nighttime"
+  },
+  "TC_05": {
+    "RoadCurvature": "Curve",
+    "RoadGrade": "Flat",
+    "RoadFrictionCoefficient": "Slippery",
+    "VisibilityConditions": "AdverseWeather"
+  },
+  "TC_06": {
+    "RoadCurvature": "Straight",
+    "RoadGrade": "Downhill",
+    "RoadFrictionCoefficient": "Slippery",
+    "VisibilityConditions": "AdverseWeather"
+  },
+  "TC_07": {
+    "RoadCurvature": "Straight",
+    "RoadGrade": "Uphill",
+    "RoadFrictionCoefficient": "Slippery",
+    "VisibilityConditions": "Nighttime"
+  },
+  "TC_08": {
+    "RoadCurvature": "Curve",
+    "RoadGrade": "Flat",
+    "RoadFrictionCoefficient": "Dry",
+    "VisibilityConditions": "Nighttime"
+  },
+  "TC_09": {
+    "RoadCurvature": "Straight",
+    "RoadGrade": "Uphill",
+    "RoadFrictionCoefficient": "Slippery",
+    "VisibilityConditions": "AdverseWeather"
+  },
+  "TC_10": {
+    "RoadCurvature": "Straight",
+    "RoadGrade": "Flat",
+    "RoadFrictionCoefficient": "Dry",
+    "VisibilityConditions": "Good"
+  },
+  "TC_11": {
+    "RoadCurvature": "Straight",
+    "RoadGrade": "Downhill",
+    "RoadFrictionCoefficient": "Slippery",
+    "VisibilityConditions": "Nighttime"
+  },
+  "TC_12": {
+    "RoadCurvature": "Curve",
+    "RoadGrade": "Flat",
+    "RoadFrictionCoefficient": "Dry",
+    "VisibilityConditions": "Good"
+  },
+  "TC_13": {
+    "RoadCurvature": "Curve",
+    "RoadGrade": "Flat",
+    "RoadFrictionCoefficient": "Slippery",
+    "VisibilityConditions": "Good"
+  },
+  "TC_14": {
+    "RoadCurvature": "Straight",
+    "RoadGrade": "Uphill",
+    "RoadFrictionCoefficient": "Dry",
+    "VisibilityConditions": "Nighttime"
+  }
+}
