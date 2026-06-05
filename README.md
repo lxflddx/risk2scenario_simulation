@@ -48,7 +48,7 @@ python main.py
 - 在 CARLA 仿真环境中评估每个场景；
 - 日志保存到 `logs/`。
 
-**消融实验**：若需去除时间敏感交互建模进行消融实验，在 `configs/config.yaml` 中将 `time_interval` 参数改为 `[5, 5]`，固定间隔，不再动态变化。
+**时间敏感消融实验**：若需去除时间敏感交互建模进行消融实验，在 `configs/config.yaml` 中将 `time_interval` 参数改为 `[5, 5]`，固定间隔，不再动态变化。
 ### 6. 结果验证
 
 若程序运行成功，仿真日志记录在 `logs/` 文件夹中，文件名如 `2026-06-02-13-23.log`。
@@ -74,18 +74,20 @@ risk_fuzz/
 │   ├── basic.json                    # 基础场景配置
 │   └── config.yaml                   # 遗传算法参数
 ├── data/                             # 种子场景测试用例（.xlsx）
+│   ├── combine_gemma_12b/            # 小参数大模型消融实验种子场景数据
+│   ├── risk2Scenario_C2/             # C2消融实验种子场景数据
+│   └── risk2Scenario_CT/             # CT增强种子场景数据
 ├── logs/                             # 仿真日志存放目录
+├── results_logs/                     # 整理后的最终结果日志
 ├── risk2scenario/                    # 场景生成
 │   ├── core/                         # 遗传算法与仿真核心模块
 │   │   ├── algorithm.py              # 遗传算法
-│   │   ├── carla_world.py            # CARLA世界封装
+│   │   ├── carla_world.py            # CARLA世界封装，实现车辆动作
 │   │   ├── DummyWorld.py             
 │   │   ├── risk_chromosome.py        
 │   │   ├── simulate.py               # 仿真执行
 │   │   ├── statement.py              
 │   │   └── testcase.py               
-│   ├── random/                       # 随机基线方法
-│   │   └── random_test.py            
 │   └── utils/                        # 工具函数
 │       ├── fnds.py                   # 适应度计算与 Pareto 前沿排序
 │       ├── my_parse.py               # 测试用例语法解析
@@ -93,4 +95,4 @@ risk_fuzz/
 │       └── simulate_utils.py         
 ├── main.py                           # 程序入口
 ├── README.md                         
-└── requirements.txt                  
+└── requirements.txt            
