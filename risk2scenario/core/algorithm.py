@@ -7,7 +7,7 @@ import ast
 import math
 import astunparse
 import logging
-from simulate import Simulation
+from risk2scenario.core.simulate import Simulation
 from risk2scenario.utils import fnds
 
 logger = logging.getLogger(__name__)

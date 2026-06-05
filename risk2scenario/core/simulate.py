@@ -7,7 +7,7 @@ from risk2scenario.utils import simulate_utlis
 import carla
 import DummyWorld
 
-from carla_world import CarlaWorld
+from risk2scenario.core.carla_world import CarlaWorld
 # from carla_world import ActionException
 
 # 修改成自己的carla路径

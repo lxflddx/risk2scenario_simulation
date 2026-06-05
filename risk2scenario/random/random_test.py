@@ -2,7 +2,7 @@ import logging
 import yaml
 from datetime import datetime
 from risk2scenario.utils.my_parse import Parser
-from simulate import Simulation
+from risk2scenario.core.simulate import Simulation
 
 
 import random

@@ -1,8 +1,8 @@
 from __future__ import annotations
 import json
 import logging
-from testcase import TestCase
-from statement import Statement, ConstructorStatement, MethodStatement
+from risk2scenario.core.testcase import TestCase
+from risk2scenario.core.statement import Statement, ConstructorStatement, MethodStatement
 
 import random
 import astunparse

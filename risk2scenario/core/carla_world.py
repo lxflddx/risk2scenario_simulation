@@ -15,8 +15,8 @@ from agents.navigation.controller import VehiclePIDController, PIDLongitudinalCo
 from agents.navigation.basic_agent import BasicAgent
 from agents.navigation.behavior_agent import BehaviorAgent  # pylint: disable=import-error
 from agents.tools.misc import draw_waypoints, distance_vehicle, vector, is_within_distance, get_speed
-from statement import Statement
-from testcase import TestCase
+from risk2scenario.core.statement import Statement
+from risk2scenario.core.testcase import TestCase
 
 has_collided = False
 
