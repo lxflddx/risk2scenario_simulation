@@ -1,4 +1,4 @@
-# Risk2Scenario_SR_simulation
+# Risk2Scenario_CT_simulation
 ## 方法概述
 本框架从上一阶段生成的逻辑场景测试用例出发，在仿真环境中运行场景，进行多目标优化，生成场景。
 ## 依赖环境
