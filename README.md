@@ -34,7 +34,7 @@ pip install -r requirements.txt
 ### 3. 准备输入数据
 将上一阶段生成的逻辑场景测试用例（Excel 格式）放入 `data/` 目录。
 ### 4. 选择被测 Agent
-打开 `risk2scenario/core/simulate.py`，在代码中设置所需的 Agent：
+打开 `risk2scenario/core/simulate.py`，在代码`run_test()`设置所需的 Agent：
 - `BasicAgent`（默认）
 - `BehaviorAgent`
 ### 5. 运行主程序
