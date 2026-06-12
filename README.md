@@ -29,8 +29,8 @@ pip install -r requirements.txt
 - 解压到本地（例如 `C:\CARLA_0.9.15`）。
 - 启动 CARLA 服务器：
   ```powershell
-  cd C:\CARLA_0.9.15
-  .\CarlaUE4.exe -quality-level=Low -fps=30
+  CarlaUE4.exe -preferNvidia -quality-level=Low -benchmark -fps=15 -windowed -ResX=600 -ResY=480
+
 ### 3. 准备输入数据
 将上一阶段生成的逻辑场景测试用例（Excel 格式）放入 `data/` 目录。
 ### 4. 选择被测 Agent
