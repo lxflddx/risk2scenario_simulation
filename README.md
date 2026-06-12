@@ -53,7 +53,7 @@ python risk2scenario/random/random_test.py
 
 **时间敏感消融实验**：若需去除时间敏感交互建模进行消融实验，在 `configs/config.yaml` 中将 `time_interval` 参数改为 `[5, 5]`，固定间隔，不再动态变化。
 
-###6. 结果验证
+### 6. 结果验证
 
 若程序运行成功，仿真日志记录在 `logs/` 文件夹中，文件名如 `2026-06-02-13-23.log`。
 
